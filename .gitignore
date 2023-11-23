@@ -1,2 +1,4 @@
 venv/
 명령어.md
+*/.env
+.env
