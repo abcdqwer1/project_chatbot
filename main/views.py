@@ -1,10 +1,14 @@
-# myapp/views.py
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Conversation
 from .serializers import ConversationSerializer
+from dotenv import load_dotenv
 import openai
+import os
+
+load_dotenv()
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
@@ -39,6 +43,7 @@ class ConversationViewSet(viewsets.ModelViewSet):
                 # 대화 기록에 새로운 응답 추가
                 session_conversations.append({'prompt': prompt, 'response': response})
                 request.session['conversations'] = session_conversations
+                request.session.modified = True
                 return Response(serializer.data, status=201)
 
             return Response(serializer.errors, status=400)
