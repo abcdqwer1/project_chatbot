@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        #chat-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="chat-messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        async function sendMessage() {
+            const userInputElement = document.getElementById('user-input');
+            const message = userInputElement.value.trim();
+
+            if (message !== '') {
+                // 서버에 메시지 전송
+                try {
+                    const response = await axios.post('http://127.0.0.1:8000/Conversation/chatbot/', {
+                        prompt: message
+                    });
+
+                    // 서버 응답을 처리하여 메시지 화면에 추가
+                    const chatMessagesElement = document.getElementById('chat-messages');
+                    chatMessagesElement.innerHTML += `<p>User: ${message}</p>`;
+                    chatMessagesElement.innerHTML += `<p>AI: ${response.data.content}</p>`;
+
+                    // 입력 필드 초기화
+                    userInputElement.value = '';
+                } catch (error) {
+                    console.error('Error sending message:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -9,8 +9,7 @@
 <body>
     <div id="data"></div>
     <script>
-        // fetch로 http://127.0.0.1:8000/blog/ 데이터 가져와서 출력
-        fetch('http://127.0.0.1:8000/blog/')
+        fetch('http://127.0.0.1:8000/conversation/chatbot/')
         .then(response => response.json())
         .then(data => {
             console.log(data);

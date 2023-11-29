@@ -12,11 +12,4 @@ class ConversationSerializer(serializers.ModelSerializer):
     # user = UserSerializer()
     class Meta:
         model = Conversation
-        # fields = '__all__'
-        fields = [
-            'id',
-            'user',
-            'content',
-            'created_at',
-            'updated_at',
-        ]
+        fields = '__all__'
