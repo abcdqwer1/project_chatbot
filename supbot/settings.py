@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 import os
 
 # OpenAI API Key
@@ -23,6 +24,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # CORS
     'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,8 +32,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # DRF
-    'rest_framework',
+    # DRF ,JWT 및 인증 관련
+    "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth.registration",
     'drf_spectacular',
     # APPS
     'main',
@@ -46,7 +55,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_THROTTLE_RATES': {
         'user': '1000/day',
-    }
+    },
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
 }
 
 MIDDLEWARE = [
@@ -58,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # allauth 
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'supbot.urls'
@@ -131,5 +145,22 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+REST_USE_JWT = True  # JWT 사용 여부
+JWT_AUTH_COOKIE = "my-app-auth"  # 호출할 Cookie Key 값
+JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"  # Refresh Token Cookie Key 값
+
+SITE_ID = 1  # 해당 도메인 id
+ACCOUNT_UNIQUE_EMAIL = True  # User email unique 사용 여부
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # 사용자 이름 필드 지정
+ACCOUNT_USERNAME_REQUIRED = False  # User username 필수 여부
+ACCOUNT_EMAIL_REQUIRED = True  # User email 필수 여부
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # 로그인 인증 수단
+ACCOUNT_EMAIL_VERIFICATION = "none"  # email 인증 필수 여부
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # AccessToken 유효 기간 설정
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),  # RefreshToken 유효 기간 설정
+}
 
 CORS_ALLOW_ALL_ORIGINS = True

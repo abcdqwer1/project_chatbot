@@ -2,3 +2,14 @@ venv/
 명령어.md
 */.env
 .env
+
+# ubuntu server file
+.Xauthority
+.bash_history
+.bashrc
+.cache
+.ssh
+.vim
+.viminfo
+.vscode-server
+.wget-hsts
