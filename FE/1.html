@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat SUPBOT</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/search.css">
+    
+    <!-- <script src="https://code.jquery.com/jquery-latest.min.js"></script> -->
+
+</head>
+
+<body>
+    <header>
+        <h1 class="web-title">supbot</h1>    
+    </header>
+    <div class="search_main">
+        
+        <div class="search_mainLeft">
+
+            <form class="productSearch2" method="post">
+
+                <!-- <label for="prompt">chat</label> -->
+                <input id="question_prompt" in="prompt" type="text" placeholder="ex) 로그인페이지 html 코드 작성해줘">
+                
+                <div class="btn_grp">
+                    <button class="search_btn1" type="submit">확인</button>
+                </div>
+
+                <p id="loading_msg"> 답변을 작성 중 입니다. 잠시만 기다려주세요. </p>
+
+            </form>
+        </div>
+
+        <div class="search_answer">
+            <div class="search_answerItem" id="search_answerContent"><div>
+        </div>
+    </div>
+
+        <footer></footer>
+
+    <script src="./script/chat.js"></script>
+
+</body>
+</html>
