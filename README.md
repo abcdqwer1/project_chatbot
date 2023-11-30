@@ -111,8 +111,7 @@
 
 # 7. 메인기능
 
-- CRUD 기능
- - main app에 viewsets으로 구현
+- CRUD 기능 (main app에 viewsets으로 구현)
  <br>
 
 - 회원가입
@@ -120,14 +119,12 @@
 ![image](https://github.com/abcdqwer1/project_chatbot/assets/68181016/e453e175-71b7-44f6-b928-2c7007f04a18)
 <br>
 
-- jwt 토큰
- - simplejwt 사용
+- jwt 토큰 (simplejwt 사용)
 ![image](https://github.com/abcdqwer1/project_chatbot/assets/68181016/fc0ab00a-b5e4-4338-8f03-1584f9b1e15a)
 <br>
 
-- swagger
- - drf_spectacular 사용
-
+- swagger (drf_spectacular 사용)
+<br>
 
 
 # 8. 트러블슈팅
