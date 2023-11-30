@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # DRF ,JWT 및 인증 관련
     "rest_framework",
     "rest_framework.authtoken",
+    'rest_framework_simplejwt',
     "dj_rest_auth",
     "django.contrib.sites",
     "allauth",
@@ -59,6 +60,9 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 MIDDLEWARE = [
@@ -146,21 +150,36 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
 
-REST_USE_JWT = True  # JWT 사용 여부
-JWT_AUTH_COOKIE = "my-app-auth"  # 호출할 Cookie Key 값
-JWT_AUTH_REFRESH_COOKIE = "my-refresh-token"  # Refresh Token Cookie Key 값
-
-SITE_ID = 1  # 해당 도메인 id
-ACCOUNT_UNIQUE_EMAIL = True  # User email unique 사용 여부
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # 사용자 이름 필드 지정
-ACCOUNT_USERNAME_REQUIRED = False  # User username 필수 여부
-ACCOUNT_EMAIL_REQUIRED = True  # User email 필수 여부
-ACCOUNT_AUTHENTICATION_METHOD = "email"  # 로그인 인증 수단
-ACCOUNT_EMAIL_VERIFICATION = "none"  # email 인증 필수 여부
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # AccessToken 유효 기간 설정
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),  # RefreshToken 유효 기간 설정
-}
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
 
-CORS_ALLOW_ALL_ORIGINS = True
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'JWK_URL': None,
+    'LEEWAY': 0,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'TOKEN_USER_CLASS': 'rest_framework_simplejwt.models.TokenUser',
+
+    'JTI_CLAIM': 'jti',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
